@@ -1,5 +1,5 @@
 #===============================================================================
-# Copyright (C) 2010 Diego Duclos
+# Copyright (C) 2010 Mark Lamb
 #
 # This file is part of pyfa.
 #
@@ -40,6 +40,7 @@ from gui import bitmapLoader
 from gui.mainMenuBar import MainMenuBar
 from gui.additionsPane import AdditionsPane
 from gui.marketBrowser import MarketBrowser
+from gui.characterBrowser import CharacterBrowser
 from gui.multiSwitch import MultiSwitch
 from gui.statsPane import StatsPane
 from gui.shipBrowser import ShipBrowser, FitSelected
@@ -103,7 +104,7 @@ class MainFrame(wx.Frame):
         return cls.__instance if cls.__instance is not None else MainFrame()
 
     def __init__(self):
-        title="pyfa %s%s - Python Fitting Assistant"%(config.version, "" if config.tag.lower() != 'git' else " (git)")
+        title="pyfa %s%s - Python Fitting Assistant: MFL Edition"%(config.version, "" if config.tag.lower() != 'git' else " (git)")
         wx.Frame.__init__(self, None, wx.ID_ANY, title)
 
         MainFrame.__instance = self
@@ -143,12 +144,16 @@ class MainFrame(wx.Frame):
 
         marketImg = bitmapLoader.getImage("market_small", "icons")
         shipBrowserImg = bitmapLoader.getImage("ship_small", "icons")
+        characterBrowserImg = bitmapLoader.getImage("character_small", "icons")
 
         self.marketBrowser = MarketBrowser(self.notebookBrowsers)
         self.notebookBrowsers.AddPage(self.marketBrowser, "Market", tabImage = marketImg, showClose = False)
 
         self.shipBrowser = ShipBrowser(self.notebookBrowsers)
         self.notebookBrowsers.AddPage(self.shipBrowser, "Ships", tabImage = shipBrowserImg, showClose = False)
+        
+        self.characterBrowser = CharacterBrowser(self.notebookBrowsers)
+        self.notebookBrowsers.AddPage(self.characterBrowser, "Characters", tabImage = characterBrowserImg, showClose = False)
 
         #=======================================================================
         # DISABLED FOR RC2 RELEASE
